@@ -23,9 +23,11 @@
   when: not minikube_check_existing.stat.exists
         or (minikube_check_existing.stat.exists
             and minikube_check_existing_version.stdout_lines[0] != minikube_version)
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Ensure minikube package is symlinked
   file:
     src: "{{ minikube_install_dir }}/minikube-{{ minikube_version }}"
     dest: "{{ minikube_install_dir }}/minikube"
     state: link
+  ignore_errors: "{{ ansible_check_mode }}"    

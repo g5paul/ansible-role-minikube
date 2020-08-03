@@ -12,7 +12,8 @@
       - minikube_check_installed.stat.islnk
     fail_msg: minikube was not installed as expected, it is likely something went wrong.
     success_msg: minikube has been installed as expected.
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Check the minikube binary version matches the expected version
   shell: >
     set -o pipefail && \
@@ -23,10 +24,12 @@
   changed_when: false
   failed_when: false
   register: minikube_check_installed_version
-
+  ignore_errors: "{{ ansible_check_mode }}"
+  
 - name: Fail play if minikube is not the expected version
   assert:
     that:
       - minikube_check_installed_version.stdout_lines[0] == minikube_version
     fail_msg: Installed minikube version is not as expected, it is likely something went wrong.
     success_msg: Installed minikube version is as expected.
+  ignore_errors: "{{ ansible_check_mode }}"
