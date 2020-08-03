@@ -40,3 +40,4 @@
   changed_when: false
   register: minikube_check_existing_version
   when: minikube_check_existing.stat.exists
+  ignore_errors: "{{ ansible_check_mode }}"
